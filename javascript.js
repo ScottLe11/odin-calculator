@@ -35,10 +35,12 @@ function operate(op, num1, num2){
     }
 }
 
+const divBox = document.querySelector(".inputBox");
 //Clicking buttons
 const allBoxes = document.querySelectorAll(".box");
 allBoxes.forEach(box => {
     box.addEventListener("click", (e) => {
+        divBox.textContent += e.target.textContent;
         console.log(e.target.textContent);
     });
 });
