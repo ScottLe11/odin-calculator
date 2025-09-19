@@ -104,15 +104,8 @@ function handleErase(){
     divBox.textContent = "";
 }
 
-
-const divBox = document.querySelector(".inputBox");
-//Clicking buttons
-const allBoxes = document.querySelectorAll(".box");
-allBoxes.forEach(box => {
-    box.addEventListener("click", (e) => {
-        const val = e.target.textContent;
-        
-        if (!isNaN(Number(val))){
+function parseVal(val){
+    if (!isNaN(Number(val))){
             handleNum(val);
         }
 
@@ -125,37 +118,30 @@ allBoxes.forEach(box => {
         else if (val == "C"){
             handleErase(true);
         }
+}
 
+
+const divBox = document.querySelector(".inputBox");
+//Clicking buttons
+const allBoxes = document.querySelectorAll(".box");
+allBoxes.forEach(box => {
+    box.addEventListener("click", (e) => {
+        const val = e.target.textContent;
+        parseVal(val);
         console.log("op: " + op);
         console.log("operand1: " + operand1);
         console.log("operand2: " + operand2);
-        // const parts = storeExpression(divBox.textContent);
-        // console.log(parts);
-        // //calculate
-        // if (box.textContent == "="){
-        //     //const parts = storeExpression(divBox.textContent);
-            
-        //     if (parts.length == 3 && (!isNaN(Number(parts[0])))
-        //     && (!isNaN(Number(parts[2]))) && operators.includes(parts[1])){
-        //         divBox.textContent = operate(parts[1], Number(parts[0]), Number(parts[2]));
-        //     }
-        //     //else if (parts.length == 4){
-
-        //     //}
-        // }
-        // else if (parts.length == 4){
-        //     console.log("hjere");
-        //     //const parts = storeExpression(divBox.textContent);
-        //     if ((!isNaN(Number(parts[0])))
-        //     && (!isNaN(Number(parts[2]))) && operators.includes(parts[1]) && operators.includes(parts[3])){
-        //         divBox.textContent = operate(parts[1], Number(parts[0]), Number(parts[2])) + parts[3];
-        //     }
-        // }
-
-        // else{
-        //     divBox.textContent += e.target.textContent;
-        //     console.log(e.target.textContent);
-        // }
+        
     });
+
+
+
 });
+document.addEventListener("keydown", (e) => {
+        const val = e.key;
+        parseVal(val);
+        console.log("op: " + op);
+        console.log("operand1: " + operand1);
+        console.log("operand2: " + operand2);
+    });
 
