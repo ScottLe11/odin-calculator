@@ -2,6 +2,8 @@ let operand1 = null;
 let operand2 = null;
 let op = null;
 
+let resetFlag = false;
+
 const operators = ['+', '-', '*', '/'];
 
 //Basic Math formulas
@@ -18,6 +20,9 @@ function multiply(num1, num2){
 }
 
 function divide(num1, num2){
+    if (num2 == 0){
+        return "Error divide by 0";
+    }
     return num1 / num2;
 }
 
@@ -44,6 +49,11 @@ function operate(op, num1, num2){
 // }
 
 function handleNum(val){
+    if (resetFlag){
+        handleErase();
+        resetFlag = false;
+    }
+    
     if (op == null){
         // build first operand
         if (operand1 == null){
@@ -59,6 +69,7 @@ function handleNum(val){
             operand2 = val;
         }
         else{
+            console.log(operand2 + " "  +val)
             operand2 += val;
         }
         divBox.textContent = operand2;
@@ -66,15 +77,31 @@ function handleNum(val){
 }
 
 function handleOperator(val){
+    if (op != null){
+        handleEquals(false);
+    }
+    operand2 = null;
     op = val;
-    divBox.textContent = op;
+    //divBox.textContent = op;
 }
 
-function handleEquals(){
+function handleEquals(val){
     if (operand1 != null && operand2 != null && op != null){
-        console.log(operand1 + op + operand2);
-        divBox.textContent = operate(op, Number(operand1), Number(operand2));
+        //console.log(operand1 + op + operand2);
+        operand1 = operate(op, Number(operand1), Number(operand2));
+        divBox.textContent = operand1;
+        if (val){
+            resetFlag = true;
+        }
     }
+}
+
+function handleErase(){
+    op = null;
+    operand1 = null;
+    operand2 = null;
+
+    divBox.textContent = "";
 }
 
 
@@ -84,7 +111,7 @@ const allBoxes = document.querySelectorAll(".box");
 allBoxes.forEach(box => {
     box.addEventListener("click", (e) => {
         const val = e.target.textContent;
-
+        
         if (!isNaN(Number(val))){
             handleNum(val);
         }
@@ -95,9 +122,13 @@ allBoxes.forEach(box => {
         else if (val == "="){
             handleEquals();
         }
-        else if (val = "c"){
-            handleErase();
+        else if (val == "C"){
+            handleErase(true);
         }
+
+        console.log("op: " + op);
+        console.log("operand1: " + operand1);
+        console.log("operand2: " + operand2);
         // const parts = storeExpression(divBox.textContent);
         // console.log(parts);
         // //calculate
